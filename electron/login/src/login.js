@@ -1,4 +1,3 @@
-const ipc=window.ipc;
 $(document).ready(async function() {
   try{
     var user=localStorage.getItem('user');
@@ -31,15 +30,14 @@ $(document).ready(async function() {
     await login(user,pass);
   });
   $("#more_details").click(async function(){
-    ipc.send("chrome","http://localhost:6060")
+    ipc.send("chrome","http://"+location.hostname+"/document/")
   });
   $("#exit").click(async function() {
     ipc.send("exit");
   });
 });
 async function login(user,pass){
-  // ipc.send("maximize");
-  var client= await app.get('shopfloor/oauth2-info/');
+  var client= await app.get('i/oauth2-info/');
   var token=await app.post('o/token/',JSON.stringify({
     grant_type: "password",
     client_id: client.client_id,
@@ -50,7 +48,8 @@ async function login(user,pass){
     "Accept": "application/json",
     "Content-Type": "application/json",
   });
+  ipc.send("maximinze");
   app.setCookie('token',token.access_token,token.expires_in);
-  console.log(token);
+  app.delay(300);
   location.href = "/electron/";
 }
