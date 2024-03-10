@@ -13,23 +13,23 @@ body{
   display: flex;
   flex: 1;
   flex-direction: column;
+  overflow: hidden;
 }
 .top-container{
-  z-index: 1;
+  z-index: 1000;
   display: flex;
   flex: 1;
   justify-content: space-between;
   max-height: 35px;
   align-items: center;
-  color: #fff;
-  background-color: #053053;
   -webkit-app-region: drag;
+  box-shadow: 1px 1px 3px #00000036;
   .left{
     flex: 1;
     .logo{
       margin: 5px;
       font-weight: bold;
-      color: #ffffffee;
+      color: #0f7fc9;
     }
   }
   .mid{
@@ -37,15 +37,16 @@ body{
     align-items: center;
     justify-content: center;
     margin-bottom: 2px;
-    input{
+    input{    
       padding: 5px;
-      border: 1px solid #ffffff30;
+      border: 1px solid #00000030;
       border-radius: 5px;
       width: 30vw;
       -webkit-app-region: no-drag;
       outline: none;
       background-color: #ffffff21;
-      color: #fff;
+      color: #2c2943;
+      text-align: center;
     }
   }
   .right{
@@ -54,10 +55,10 @@ body{
     .UI-btn{
       button{
         -webkit-app-region: no-drag;
-        color: #ffffffb2;
+        color: #272121;
         border: hidden;
-        outline: hidden;
-        height: 34px;
+        outline: none;
+        height: 35px;
         padding: 0px 15px;
         cursor: pointer;
         background-color: transparent;
@@ -75,8 +76,441 @@ body{
     }
   }
 }
+.add-services{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  .s-head{    
+    font-size: 30px;
+    color: #184669;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    font-weight: bold;
+  }
+  .s-body{
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+    .s-card{
+      max-width: 400px;
+      flex: 1;
+      padding: 20px;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 1px 1px 3px #0000002b;
+      border-radius: 5px;
+      overflow: auto;
+      gap: 10px;
+      .s-name{
+        color: #373842;
+        font-weight: 600;
+        font-size: 18px;
+      }
+      button.add_services{
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4b8fc3;
+        color: #ffffffad;
+        cursor: pointer;
+        transition: 0.3s;
+        border: hidden;
+        border-radius: 5px;
+        span {
+          cursor: pointer;
+          display: inline-block;
+          position: relative;
+          transition: 0.1s;
+        }
+        span:after {
+          content: '»';
+          position: absolute;
+          opacity: 0;
+          top: 0;
+          right: -15px;
+          transition: 0.1s;
+        }
+        &:hover{
+          color: #fff;
+          background-color: #095086;
+          span {
+            padding-right: 15px;
+            &:after {
+              opacity: 1;
+              right: 0;
+            }
+          }
+        }
+      }
+      .s-details{
+        font-size: 15px;
+        border: 1px solid #00000015;
+        border-radius: 10px;
+        margin: 5px;
+        overflow: hidden;
+        table{
+          width: 100%;
+          border-collapse: collapse;
+          td{
+            border-top: 1px solid #00000015;
+            border-bottom: 1px solid #00000015;
+            padding: 10px 5px;
+            &:first-child{
+              color: #1d2f44;
+            }
+            &:last-child{
+              color: #00cc11;
+            }
+          }
+          tr:first-child{
+            td{
+              border-top: hidden;
+            }
+          }
+          tr:last-child{
+            td{
+              border-bottom: hidden;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.main-container{
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  .app-container{
+    padding: 5px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50px;
+    box-shadow: 1px 1px 3px #00000036;
+    z-index: 1000;
+    .split{
+      border-bottom: 1px solid #00000020;
+      margin: 5px;
+    }
+    .app-item{
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 20px;
+      color: #7babcb;
+      position: relative;
+      .tooltiptext {
+        display: flex;
+        align-items: center;
+        visibility: hidden;
+        height: 40px;    
+        background-color: #ffffff;
+        box-shadow: 1px 1px 3px #00000050;
+        color: #1e1d33;
+        padding: 0px 10px;
+        white-space: nowrap;
+        flex-wrap: nowrap;
+        text-align: center;
+        border-radius: 0px 10px 10px 0px;
+        position: absolute;
+        z-index: 1;
+        left: 100%;
+        opacity: 0;
+        font-size: 15px;
+        transition: opacity 0.3s;
+      }
+      &:hover{
+        color: #2088cd;
+        background-color: #0000000e;
+        .tooltiptext {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+    .active{
+      color: #ffffffe6;
+      background-color: #4f96c5; 
+      width: 45px;
+      border-radius: 0px 10px 10px 0px;
+      &:hover{
+        color: #ffffff;
+        background-color: #3a9fe2;
+        .tooltiptext {
+          visibility: hidden;
+          opacity: 0;
+        }
+      }
+    }
+  }
+  .app-view{    
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    background-color: #d3d6dd;
+    .app-menu{
+      display: flex;
+      flex-direction: column;
+      width: 250px;
+      box-shadow: 1px 1px 3px #00000020;
+      background-color: #fff;
+    }
+  }
+}
+.user-profile{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 14px;
+  .user-details{
+    padding: 0px 5px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    table{
+      margin: 5px 10px;
+      border: 1px solid #00000020;
+      border-radius: 10px;
+      td{
+        border-top: 1px solid #00000020;
+        padding: 5px;
+        &:first-child{
+          width: 40%;
+        }
+      }
+      tr:first-child td{
+        border-top: hidden;
+      }
+    }
+  }
+  .user-fullname{    
+    font-size: 20px;
+    font-weight: bold;
+    color: #577895;
+    display: flex;
+    margin: 0px 5px;
+  }
+  .user-address{
+    margin: 0px 5px;
+    font-size: 15px;
+    color: #5c8599;
+    display: flex;
+  }
+  .user-wall{
+    height: 200px;
+    position: relative;
+    border-bottom: 1px solid #0000000f;
+    background-image: linear-gradient(317deg, #1c9cf1, #82cdff);
+    .user-avatar{
+      position: absolute;
+      background-color: #d5dae3;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      border: 5px solid #fff;
+      box-shadow: 1px 1px 3px #00000060;
+      bottom: -50px;
+      left: 50%;
+    }
+  }
+}
+.h2{
+  font-size: 15px;
+  font-weight: bold;
+  color: #779db7;
+  cursor: pointer;
+  &:hover{
+    color: #5292bd;
+    &:before{
+      color: #87b4c9;
+    }
+  }
+  &:before{
+    content: "#";
+    color: #ddd;
+    margin-right: 5px;
+  }
+}
+.h3{
+  font-size: 13px;
+  font-weight: bold;
+  color: #779db7;
+  cursor: pointer;
+  &:hover{
+    color: #5292bd;
+    &:before{
+      color: #87b4c9;
+    }
+  }
+  &:before{
+    content: "#";
+    color: #ddd;
+    margin-right: 5px;
+  }
+}
+.icenter{
+  align-items: center;
+}
+.acenter{
+  align-items: center;
+  justify-content: center;
+}
+.mg5{
+  margin: 5px;
+}
+.pd5{
+  padding: 5px;
+}
+.pd10{
+  padding: 10px;
+}
+.w400{
+  width: 400px;
+}
+.w40{
+  max-width: 40%;
+}
+.w30{
+  max-width: 30%;
+}
+.g5{
+  gap: 5px;
+}
+.g10{
+  gap: 10px;
+}
+.app-main{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.db{
+  display: flex;
+  flex-direction: column;
+  padding: 25px 20px;
+  gap: 10px;
+  font-size: 16px;
+  color: #343747;
+  .h2{
+    font-size: 18px;
+    font-weight: bold;
+    color: #1c2225;
+    cursor: pointer;
+  }
+  .db-card{
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 3px #0000002b;
+    border-radius: 5px;
+    overflow: auto;
+    .db-chart-name{
+      color: #373842;
+      font-weight: 600;
+    }
+    .db-card-header{
+      font-size: 30px;
+      font-weight: bold;
+      unit{
+        font-size: 15px;
+      }
+    }
+    .db-card-title{
+      color: #999;
+      font-size: 15px;
+    }
+    .db-card-rate{
+      margin-top: 15px;
+      color: #999;
+      font-size: 15px;
+      up {
+        color: rgb(13, 184, 90);
+      }
+      down {
+        color: rgb(184, 81, 13);
+      }
+    }
+    .db-card-chart{
+      flex: 1;
+      min-width: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .db-chart{
+    padding-bottom: 10px;
+  }
+  select {
+    outline: none;
+    cursor: pointer;
+    padding: 5px 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    color: #041d3546;
+    border: 1px solid #041d3523;
+  }
+  table.top_users{
+    font-size: 15px;
+    border-collapse: collapse;
+    width: 100%;
+    td{
+      border-top: 1px solid #00000010;
+      border-bottom: 1px solid #00000010;
+      padding: 5px;
+      &:last-child{
+        text-align: right;
+      }
+    }
+    .add{
+      font-size: 13px;
+      color: #999;
+    }
+    .avatar{
+      width: 40px;
+      height: 40px;
+      background-color: #999;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 1px 1px 3px #00000050;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img{
+        image-rendering: optimizeQuality;
+      }
+    }
+  }
+}
+.card{
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 1px 1px 3px #00000013;
+  border-radius: 10px;
+  overflow: auto;
+}
+.flex{
+  display: flex;
+}
+.flex-c{
+  display: flex;
+  flex-direction: column;
+}
 .left{
   display: flex;
+}
+.bot{
+  margin-top: auto
 }
 .mid{
   display: flex;
@@ -84,7 +518,7 @@ body{
 }
 .right{
   display: flex;
-  justify-items: flex-end;
+  margin-left: auto;
 }
 .loader {
   position: relative;
@@ -167,7 +601,7 @@ body{
   width: 100%;
   height: 100%;
   position: fixed;
-  z-index: 1000;
+  z-index: 10000;
   align-items: center;
   justify-content: center;
   background-color: #26343d80;
