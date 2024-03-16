@@ -31,7 +31,7 @@
    # header('Location: /web');
   }
   else if ($mobile_browser > 0) {
-   # header('Location: /web');
+    include('web/index.php');
   }
   else {
     if (strpos(strtolower($_SERVER['HTTP_USER_AGENT']),'electron') > 0){
