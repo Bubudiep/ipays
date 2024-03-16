@@ -1,4 +1,5 @@
 const app={};
+const ipc = window.ipc;
 const api_port = 8000;
 app.getcookie=function(name){
   const value = `; ${document.cookie}`;
@@ -7,7 +8,8 @@ app.getcookie=function(name){
 }
 const token=app.getcookie('token');
 app.user= async function(){
-  return user= await app.get("shopfloor/users/");
+  var user= await app.get("i/users/");
+  return user;
 };
 app.post=async function(uri,data,headers={Authorization: token,}){
   var start = new Date().getTime(); // note getTime()
@@ -25,11 +27,14 @@ app.post=async function(uri,data,headers={Authorization: token,}){
       var end = new Date().getTime();
       console.log(uri + " : " + (end - start) + "ms");
     },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR)
+    }
   }));
 }
 app.patch=async function(uri,data){
   var start = new Date().getTime(); // note getTime()
-  return ($.ajax({
+  return await $.ajax({
     type: "PATCH",
     url: `${location.protocol}//${location.hostname}:${api_port}/${uri}`,
     async: true,
@@ -45,11 +50,11 @@ app.patch=async function(uri,data){
       var end = new Date().getTime();
       console.log(uri + " : " + (end - start) + "ms");
     },
-  }));
+  });
 }
 app.get=async function(uri){
   var start = new Date().getTime(); // note getTime()
-  return ($.ajax({
+  return await $.ajax({
     type: "GET",
     url: `${location.protocol}//${location.hostname}:${api_port}/${uri}`,
     async: true,
@@ -60,11 +65,30 @@ app.get=async function(uri){
     success: function (data) {
       return data;
     }, // prevent caching response
-    complete: function () {
+    complete: function (data) {
       var end = new Date().getTime();
       console.log(`${location.protocol}//${location.hostname}:${api_port}/${uri}` + (end - start) + "ms");
+      return data;
     },
-  }));
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR)
+    }
+  });
+}
+app.runmoney=function(id, start, end, duration) {
+  if (start === end) return;
+  var range = end - start;
+  var current = start;
+  var increment = end > start? 1 : -1;
+  var stepTime = Math.abs(Math.floor(duration / range));
+  var obj = document.getElementById(id);
+  var timer = setInterval(function() {
+      current += increment;
+      obj.innerHTML = current;
+      if (current == end) {
+          clearInterval(timer);
+      }
+  }, stepTime);
 }
 app.setCookie = function(cname, cvalue, secs) {
   const d = new Date();

@@ -12,7 +12,7 @@
 <body>
   <div class="login-container">
     <div class="flex f1 flex-e">
-      <div class="ads-1">
+      <div class="hint-1">
         <div class="flex-cl">
           <div class="h2">Hiệu quả</div>
           <div class="h3">Nhanh chóng</div>
@@ -44,7 +44,7 @@
       </div>
       <div class="form-container">
         <div class="form">
-          <div class="login-header">MES</div>
+          <div class="login-header">iPays</div>
           <div class="flex-column">
             <label>Tài khoản </label></div>
             <div class="inputForm">
