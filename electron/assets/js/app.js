@@ -1,6 +1,7 @@
 const app={};
 const ipc = window.ipc;
-const api_port = 8000;
+const api_port = 8001;
+const protocal="http:"
 app.getcookie=function(name){
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
@@ -15,7 +16,7 @@ app.post=async function(uri,data,headers={Authorization: token,}){
   var start = new Date().getTime(); // note getTime()
   return ($.ajax({
     type: "POST",
-    url: `${location.protocol}//${location.hostname}:${api_port}/${uri}`,
+    url: `${protocal}//${location.hostname}:${api_port}/${uri}`,
     async: true,
     headers: headers,
     dataType: "json",
@@ -36,7 +37,7 @@ app.patch=async function(uri,data){
   var start = new Date().getTime(); // note getTime()
   return await $.ajax({
     type: "PATCH",
-    url: `${location.protocol}//${location.hostname}:${api_port}/${uri}`,
+    url: `${protocal}//${location.hostname}:${api_port}/${uri}`,
     async: true,
     headers: {
       Authorization: token,
@@ -53,10 +54,14 @@ app.patch=async function(uri,data){
   });
 }
 app.get=async function(uri){
+  var fixuri=uri;
+  if(uri[0]!='h'){
+    var fixuri=`${protocal}//${location.hostname}:${api_port}/${uri}`;
+  }
   var start = new Date().getTime(); // note getTime()
   return await $.ajax({
     type: "GET",
-    url: `${location.protocol}//${location.hostname}:${api_port}/${uri}`,
+    url: fixuri,
     async: true,
     dataType: "json",
     headers: {
@@ -67,7 +72,7 @@ app.get=async function(uri){
     }, // prevent caching response
     complete: function (data) {
       var end = new Date().getTime();
-      console.log(`${location.protocol}//${location.hostname}:${api_port}/${uri}` + (end - start) + "ms");
+      console.log(`${fixuri}` + (end - start) + "ms");
       return data;
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -75,6 +80,49 @@ app.get=async function(uri){
     }
   });
 }
+app.addService= async function(svcs){
+  switch(svcs){
+    case 'restaurant':
+      var view=`<div class='white-box'>
+        <div class='head'>Đăng ký nhà hàng / quán ăn mới</div>
+        <div class='form'>
+          <div class="items center">
+            <div class='avatar'>
+              <label for='avatar_img' id='avt-preview'>Chọn ảnh đại diện</label>
+              <input type='file' name='avatar_img' id='avatar_img'>
+            </div>
+          </div>
+          <div class='items'>
+            <div class='items_name'>Tên quán</div>
+            <div class='items_input'><input type="text" placeholder="nhập tên quán của bạn"></div>
+            <div class='items_name'>Địa chỉ quán</div>
+            <div class='items_select'>
+              <select id='addr-tinh'><option>-- Tỉnh --</option></select>
+              <select id='addr-huyen'><option>-- Huyện/ Thành phố --</option></select>
+              <select id='addr-xa'><option>-- Xã/Phưởng --</option></select>
+              <select id='addr-thon'><option>-- Thôn/Đường --</option></select>
+              <input id='addr-details' type="text" placeholder="vị trí chính xác">
+            </div>
+            <div class='items_name'>Mô tả</div>
+            <div class='items_input'><textarea spellcheck=false placeholder="mô tả quán ăn của bạn"></textarea></div>
+          </div>
+        </div>
+      </div>`;
+      app.view(view);
+      $("#avatar_img").change(async function(){
+        app.compressIMAGE(this.files[0],"avt-preview")
+      });
+      break;
+    default: break;
+  }
+}
+app.view = function(view){
+  var box=`<div class="app_bg"><div class="app_bg_autoclose"></div><div class="app_bg_view">${view}</div></div>`
+  $("#main-load").append(box);
+  $(".app_bg_autoclose").click(function(){
+    this.parentNode.remove();
+  });
+};
 app.runmoney=function(id, start, end, duration) {
   if (start === end) return;
   var range = end - start;
@@ -126,4 +174,51 @@ app.load = function (id, delay) {
 }
 app.delay = function (ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+app.compressIMAGE = async function(file,out) {
+  const blobURL = URL.createObjectURL(file);
+  const img = new Image();
+  img.src = blobURL;
+  img.onerror = function () {
+      URL.revokeObjectURL(this.src);
+      // Handle the failure properly
+      console.log("Cannot load image");
+  };
+  img.onload = function () {
+      URL.revokeObjectURL(this.src);
+      const [newWidth, newHeight] = calculateSize(img, 900, 600);
+      const canvas = document.createElement("canvas");
+      canvas.width = newWidth;
+      canvas.height = newHeight;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, newWidth, newHeight);
+      canvas.toBlob(
+          (blob) => { 
+            var image = new Image();
+            image.src = URL.createObjectURL(blob);
+            $(`#${out}`).html(image);
+          },"image/jpeg",0.7
+      );
+  };
+}
+function calculateSize(img, maxWidth, maxHeight) {
+  let width = img.width;
+  let height = img.height;
+  if (width > height) {
+      if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+      }
+  } else {
+      if (height > maxHeight) {
+          width = Math.round((width * maxHeight) / height);
+          height = maxHeight;
+      }
+  }
+  return [width, height];
+}
+function readableBytes(bytes) {
+  const i = Math.floor(Math.log(bytes) / Math.log(1024)),
+      sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
 }

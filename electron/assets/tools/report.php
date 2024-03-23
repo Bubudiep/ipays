@@ -1,58 +1,82 @@
 <div class="app-main">
   <div class="flex-c db">
-    <div class="flex">
+    <div class="title">
       <div class="h2">Báo cáo doanh số</div>
-      <div class="right"><select><option>Hôm nay</option></select></div>
     </div>
     <div class="flex g10">
       <div class="db-card">
-        <div class="flex">
-          <div class="flex-c">
-            <div class="db-card-header"><t id="doanhthu">700000</t> <unit>vnđ</unit></div>
-            <div class="db-card-title">Tổng doanh thu</div>
-            <div class="db-card-rate"><up><i class="fa-solid fa-arrow-up"></i> 1.0%</up> Doanh thu ổn định</div>
+        <div class="flex-c">
+          <div class="flex jspace">
+            <div class="flex-c">
+              <div class="db-card-header"><t id="doanhthu">700000</t> <unit>vnđ</unit></div>
+              <div class="db-card-title">Tổng doanh thu</div>
+            </div>
+            <div class="db-card-chart">???</div>
           </div>
-          <div class="db-card-chart">???</div>
+          <div class="db-card-rate">
+            <up><i class="fa-solid fa-arrow-up"></i> 1.0%</up>
+            <ct>doanh thu ổn định</ct>
+          </div>
         </div>
       </div>
       <div class="db-card">
-        <div class="flex">
-          <div class="flex-c">
-            <div class="db-card-header">400</div>
-            <div class="db-card-title">Tổng đơn hàng</div>
-            <div class="db-card-rate"><up><i class="fa-solid fa-arrow-up"></i> 20.0%</up> so với hôm qua</div>
+        <div class="flex-c">
+          <div class="flex jspace">
+            <div class="flex-c">
+              <div class="db-card-header">400</div>
+              <div class="db-card-title">Tổng đơn hàng</div>
+            </div>
+            <div class="db-card-chart">???</div>
           </div>
-          <div class="db-card-chart">???</div>
+          <div class="db-card-rate">
+            <up><i class="fa-solid fa-arrow-up"></i> 20.0%</up>
+            <ct>so với hôm qua</ct>
+          </div>
         </div>
       </div>
       <div class="db-card">
-        <div class="flex">
-          <div class="flex-c">
-            <div class="db-card-header">125</div>
-            <div class="db-card-title">Tổng khách hàng</div>
-            <div class="db-card-rate"><up><i class="fa-solid fa-arrow-up"></i> 12</up> khách lần đầu thanh toán</div>
+        <div class="flex-c">
+          <div class="flex jspace">
+            <div class="flex-c">
+              <div class="db-card-header">125</div>
+              <div class="db-card-title">Khách hàng</div>
+            </div>
+            <div class="db-card-chart">???</div>
           </div>
-          <div class="db-card-chart">???</div>
+          <div class="db-card-rate">
+            <up><i class="fa-solid fa-arrow-up"></i> 12</up>
+            <ct>khách lần đầu thanh toán</ct>
+          </div>
         </div>
       </div>
       <div class="db-card">
-        <div class="flex">
-          <div class="flex-c">
-            <div class="db-card-header">26%</div>
-            <div class="db-card-title">KPI tuần</div>
-            <div class="db-card-rate"><up><i class="fa-solid fa-arrow-up"></i> 12.0%</up> cộng thêm vào KPI tuần</div>
+        <div class="flex-c">
+          <div class="flex jspace">
+            <div class="flex-c">
+              <div class="db-card-header">26%</div>
+              <div class="db-card-title">KPI tuần</div>
+            </div>
+            <div class="db-card-chart" id="KPI_tuan"></div>
           </div>
-          <div class="db-card-chart" id="KPI_tuan"></div>
+          <div class="db-card-rate">
+            <up><i class="fa-solid fa-arrow-up"></i> 12.0%</up>
+            <ct>thêm vào KPI tuần</ct>
+          </div>
         </div>
       </div>
       <div class="db-card">
-        <div class="flex">
-          <div class="flex-c">
-            <div class="db-card-header">82%</div>
-            <div class="db-card-title">KPI tháng</div>
-            <div class="db-card-rate"><up><i class="fa-solid fa-arrow-up"></i> 2.0%</up> cộng thêm vào KPI tháng</div>
+        <div class="flex-c">
+          <div class="flex jspace">
+            <div class="flex-c">
+              <div class="db-card-header">82%</div>
+              <div class="db-card-title">KPI tháng</div>
+            </div>
+            <div class="db-card-chart" id="KPI_thang"></div>
           </div>
-          <div class="db-card-chart" id="KPI_thang"></div>
+          <div class="db-card-rate">
+            <up><i class="fa-solid fa-arrow-up"></i> 2.0%</up>
+            <ct>thêm vào KPI tháng</ct>
+          </div>
         </div>
       </div>
     </div>
@@ -66,7 +90,7 @@
       </div>
       <div class="db-card w30 db-chart">
         <div class="flex">
-          <div class="db-chart-name">Top bán chạy ( Gọi thêm & nước uống )</div>
+          <div class="db-chart-name">Bán chạy (Top 10)</div>
           <div class="flex right"><select><option>Tháng này</option></select></div>
         </div>
         <div class="flex" id="top_sales"></div>

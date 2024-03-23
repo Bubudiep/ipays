@@ -17,7 +17,7 @@
           <tr><td>Quản lý nhập xuất kho</td><td><i class="fa-solid fa-check"></i></td></tr>
         </table>
       </div>
-      <div class="flex acenter"><button class="add_services"><span>Đăng ký ngay</span></button></div>
+      <div class="flex acenter"><button class="add_services" id="add_restaurant"><span>Đăng ký ngay</span></button></div>
     </div>
     <div class="s-card">
       <div class="s-name">Karaoke</div>
@@ -35,7 +35,7 @@
           <tr><td>Quản lý nhập xuất kho</td><td><i class="fa-solid fa-check"></i></td></tr>
         </table>
       </div>
-      <div class="flex acenter"><button class="add_services"><span>Đăng ký ngay</span></button></div>
+      <div class="flex acenter"><button class="add_services" id="add_karaoke"><span>Đăng ký ngay</span></button></div>
     </div>
     <div class="s-card">
       <div class="s-name">Quán nước / đồ ăn vặt</div>
@@ -53,7 +53,7 @@
           <tr><td>Quản lý nhập xuất kho</td><td><i class="fa-solid fa-check"></i></td></tr>
         </table>
       </div>
-      <div class="flex acenter"><button class="add_services"><span>Đăng ký ngay</span></button></div>
+      <div class="flex acenter"><button class="add_services" id="add_coffe"><span>Đăng ký ngay</span></button></div>
     </div>
     <!-- <div class="s-card">
       <div class="s-name">Nhà trọ</div>
@@ -93,3 +93,4 @@
     </div> -->
   </div>
 </div>
+<script type="text/javascript" src="assets/tools/js/add_services.js"></script>
