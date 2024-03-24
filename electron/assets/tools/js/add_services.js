@@ -3,7 +3,7 @@ $(document).ready(async function(){
     app.addService("restaurant");
   });
   $("#add_karaoke").click(async function(){
-    app.addService("kaanoke");
+    app.addService("karaoke");
   });
   $("#add_coffe").click(async function(){
     app.addService("coffe");

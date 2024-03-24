@@ -1,7 +1,6 @@
 $(document).ready(async function(){
   try {
     var user = await app.user();
-    console.log(user);
     if (user.results&&user.results.length == 1) {
       await app.delay(500);
       $("#firstload").remove();
@@ -27,4 +26,18 @@ $(document).ready(async function(){
   $("#win-miniminze").click(async function(){
     ipc.send('minimize');
   });
+  await loadServices();
 });
+async function loadServices(){
+  try {
+    var listSV= await app.get("i/UserServices/");
+    if (listSV.results&&listSV.results.length){
+      for (var i=0;i<listSV.results.length;i++){
+        list_services.push(listSV.results[i]);
+      }
+    }
+    app.reloadServices();
+  } catch (e){
+    console.log(e)
+  }
+}

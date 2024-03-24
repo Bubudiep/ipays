@@ -32,11 +32,11 @@
           <div class="tooltiptext">Báo cáo</div>
         </div>
         <div class="split"></div>
+        <div class="flex-c" id="list_services"></div>
         <div class="app-item" id="add_services">
-        <i class="fa-solid fa-plus"></i>
+          <i class="fa-solid fa-plus"></i>
           <div class="tooltiptext">Thêm dịch vụ</div>
         </div>
-        <div class="flex-c" id="list_services"></div>
       </div>
       <div class="flex-c">
         <div class="app-item" id="profile">

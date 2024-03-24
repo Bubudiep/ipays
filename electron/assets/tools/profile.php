@@ -1,4 +1,4 @@
-<div class="flex g10 pd5">
+<div class="flex g10 pd5 f1">
   <div class="card w400">
     <div class="user-profile">
       <div class="user-wall">
@@ -21,6 +21,13 @@
         </table>
         <div class="h2">Dịch vụ đã đăng ký</div>
       </div>
+    </div>
+  </div>
+  <div class="f1 flex-c">
+    <div class="wh2 mg10x0">Ảnh của bạn</div>
+    <div class="alblum-list">
+      <div class="alblum" id="my-album"><div class='alblum-null'>Bạn chưa có album nào</div></div>
+      <div class="alblum" id="my-img"><div class='list-img-null'>Bạn chưa có ảnh nào</div></div>
     </div>
   </div>
 </div>
