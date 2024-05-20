@@ -9,7 +9,11 @@
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <link href="assets/css/app.css" rel="stylesheet">
   <link href="assets/css/button.css" rel="stylesheet">
-	<link href="assets/lib/fontawesome/css/all.css" rel="stylesheet">
+  <link href="assets/css/animation.css" rel="stylesheet">
+	<link href="assets/lib/fontawesome/css/all.css" rel="stylesheet"><link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
 </head>
 <body>
 <div class="body-container">

@@ -4,9 +4,108 @@ button.none{
   color: #999;
   cursor: pointer;
   padding: 5px 8px;
-  transform: all 0.3s;
+  transition: all 0.3s;
   border: 1px solid #ddd;
   &:hover{
     color: #6b6b6b;
+  }
+}
+button.create{
+  background-color: transparent;
+  border-radius: 5px;
+  color: #ffffffdb;
+  cursor: pointer;
+  padding: 5px 8px;
+  transition: all 0.3s;
+  border: 1px solid #10ac25;
+  background-color: #10ac25;
+  &:hover{
+    color: #fff;
+    border: 1px solid #31c703;
+    background-color: #31c703;
+  }
+}
+button.create_big{
+  background-color: transparent;
+  border-radius: 5px;
+  color: #ffffffdb;
+  cursor: pointer;
+  padding: 15px 20px;
+  transition: all 0.3s;
+  border: 1px solid #10ac25;
+  background-color: #10ac25;
+  &:hover{
+    color: #fff;
+    border: 1px solid #31c703;
+    background-color: #31c703;
+  }
+}
+button.accept{
+  background-color: transparent;
+  border-radius: 5px;
+  color: #ffffffdb;
+  cursor: pointer;
+  padding: 5px 8px;
+  transition: all 0.3s;
+  border: 1px solid #10ac25;
+  background-color: #10ac25;
+  &:hover{
+    color: #fff;
+    border: 1px solid #00e55c;
+    background-color: #00e55c;
+  }
+}
+button.shipping{
+  background-color: transparent;
+  border-radius: 5px;
+  color: #ffffffdb;
+  cursor: pointer;
+  padding: 5px 8px;
+  transition: all 0.3s;
+  border: 1px solid #10a7ac;
+  background-color: #10a7ac;
+  &:hover{
+    color: #fff;
+    border: 1px solid #0099e5;
+    background-color: #0099e5;
+  }
+}
+button.reject{
+  background-color: transparent;
+  border-radius: 5px;
+  color: #ffffffdb;
+  cursor: pointer;
+  padding: 5px 8px;
+  transition: all 0.3s;
+  border: 1px solid #ac3a10;
+  background-color: #ac3a10;
+  &:hover{
+    color: #fff;
+    border: 1px solid #e50800;
+    background-color: #e50800;
+  }
+}
+button.btn-use{
+  background-color: transparent;
+  border-radius: 5px;
+  color: #999;
+  cursor: pointer;
+  padding: 5px 8px;
+  transition: all 0.3s;
+  border: 1px solid #999;
+  &:hover{
+    color: #000;
+  }
+}
+button.normal{
+  background-color: transparent;
+  border-radius: 5px;
+  color: #999;
+  cursor: pointer;
+  padding: 5px 8px;
+  transition: all 0.3s;
+  border: 1px solid #999;
+  &:hover{
+    color: #000;
   }
 }

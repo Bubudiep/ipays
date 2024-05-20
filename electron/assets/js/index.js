@@ -2,6 +2,11 @@ $(document).ready(async function(){
   try {
     var user = await app.user();
     if (user.results&&user.results.length == 1) {
+      try {
+        ipc.send("max");
+      } catch (e) {
+        console.log(e);
+      }
       await app.delay(500);
       $("#firstload").remove();
       $("#main-load").load("assets/tools/report.php");
@@ -11,6 +16,10 @@ $(document).ready(async function(){
   }
   $(".app-item").click(async function(){
     var all=document.getElementsByClassName("app-item");
+    for (var i=0;i<all.length;i++) {
+      all[i].classList.remove("active");
+    }
+    var all=document.getElementsByClassName("app-sv");
     for (var i=0;i<all.length;i++) {
       all[i].classList.remove("active");
     }

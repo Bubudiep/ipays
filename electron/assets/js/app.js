@@ -55,20 +55,17 @@ app.patch=async function(uri,data){
     },
   });
 }
-app.get=async function(uri){
+app.get=async function(uri,header=true){
   var fixuri=uri;
   if(uri[0]!='h'){
     var fixuri=`${protocal}//${location.hostname}:${api_port}/${uri}`;
   }
   var start = new Date().getTime(); // note getTime()
-  return await $.ajax({
+  var data={
     type: "GET",
     url: fixuri,
     async: true,
     dataType: "json",
-    headers: {
-      Authorization: token,
-    },
     success: function (data) {
       return data;
     }, // prevent caching response
@@ -80,9 +77,14 @@ app.get=async function(uri){
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(jqXHR)
     }
-  });
+  }
+  if(header){
+    data.headers={ Authorization: token }
+  }
+  return await $.ajax(data);
 }
 app.addService= async function(svcs){
+  var longlat="";
   switch(svcs){
     case 'restaurant':
       var view=`<div class='white-box'>
@@ -100,12 +102,16 @@ app.addService= async function(svcs){
             <div class='items_input'><input id='store_name' type="text" placeholder="tên quán của bạn"></div>
             <div class='items_input'><input id='store_sologan' type="text" placeholder="sologan của quán (vd: ngon hết nước chấm,...)"></div>
             <div class='items_name'>Địa chỉ quán</div>
+            <div class='items_input input_selector'>
+              <input id='addr-details' type="text" placeholder="tìm kiếm vị trí nhanh">
+              <div class='address_detail' id='address_detail'></div>
+            </div>
             <div class='items_select'>
-              <select id='addr-tinh'><option value="">-- Tỉnh --</option></select>
-              <select id='addr-huyen'><option value="">-- Huyện/ Thành phố --</option></select>
-              <select id='addr-xa'><option value="">-- Xã/Phưởng --</option></select>
-              <select id='addr-thon'><option value="">-- Thôn/Đường --</option></select>
-              <input id='addr-details' type="text" placeholder="vị trí chính xác">
+              hoặc
+              <input id='address_details' type="text" placeholder="vị trí chính xác">
+              <input id="address_xa">
+              <input id="address_huyen">
+              <input id="address_tinh">
             </div>
             <div class='items_name'>Kho</div>
             <div class='items_select'>
@@ -130,6 +136,33 @@ app.addService= async function(svcs){
         </div>
       </div></div>`;
       app.view(view);
+      var timer=0;
+      $("#addr-details").keydown(async function(){
+        clearTimeout (timer);
+        timer = setTimeout(async () => {
+          var checkaddr=await app.get(`https://maps.vietmap.vn/api/autocomplete/v3?apikey=b4ed2974eda47525b4f3f0ea50ba769284d020612dc44d4c&text=${$("#addr-details").val()}`,false)
+          console.log(checkaddr)
+          if(checkaddr.length>0){
+            var items=``;
+            for(var i=0;i<checkaddr.length;i++){
+              items+=`<div class='address_items' id='${checkaddr[i].ref_id}'>${checkaddr[i].display}</div>`;
+            }
+            $("#address_detail").html(items);
+            $(".address_items").click(async function(){
+              longlat=await app.get(`https://maps.vietmap.vn/api/place/v3?apikey=b4ed2974eda47525b4f3f0ea50ba769284d020612dc44d4c&refid=`+this.id);
+              console.log(longlat);
+              $("#addr-details").val(this.textContent);
+              $("#address_detail").html("");
+              $("#address_details").val(longlat.address);
+              $("#address_xa").val(longlat.ward);
+              $("#address_huyen").val(longlat.district);
+              $("#address_tinh").val(longlat.city);
+            });
+          } else {
+            $("#address_detail").html("");
+          }
+        }, 1000);
+      });
       $("#avatar_img").change(async function(){
         console.log(this.files[0])
         var img_data=await app.compressIMAGE(this.files[0],"avt-preview");
@@ -185,11 +218,12 @@ app.addService= async function(svcs){
               Name: $("#store_name").val(),
               comment: $("#store_des").val(),
               Sologan: $("#store_sologan").val(),
-              adr_tinh: $("#addr-tinh").val(),
-              adr_huyen: $("#addr-huyen").val(),
-              adr_xa: $("#addr-xa").val(),
-              adr_thon: $("#addr-thon").val(),
-              adr_details: $("#addr-details").val(),
+              adr_tinh: longlat.city,
+              adr_huyen: longlat.district,
+              adr_xa: longlat.ward,
+              adr_details: longlat.address,
+              adr_full: longlat.display,
+              location: `${longlat.lat},${longlat.lng}`,
               Hotline: $("#store_phone").val(),
               Zalo: $("#store_zalo").val(),
               Facebook: $("#store_facebook").val(),
@@ -215,6 +249,33 @@ app.addService= async function(svcs){
     default: break;
   }
 }
+app.load = async function (id, text, delay=300) {
+  $("body").append(`<div class="app_error" id="${id}">
+    <div class="error_background"></div>
+    <div class="box">
+      <div class="icon"><svg viewBox="25 25 50 50">
+        <circle r="20" cy="50" cx="50"></circle>
+      </svg></div>
+      <div class="messages">${text}</div>
+    </div>
+  </div>`);
+  await app.delay(delay);
+}
+app.error = function(text, canclose=true){
+  var id="error_popup" + app.random();
+  $("body").append(`<div class="app_error" id="${id}">
+    <div class="error_background"></div>
+    <div class="box">
+      <div class="icon"><img src="/electron/assets/img/warning.png"></div>
+      <div class="messages">${text}</div>
+    </div>
+  </div>`);
+  $(".error_background").click(function(){
+    if(canclose){
+      this.parentNode.remove();
+    }
+  });
+}
 app.random=function (length) {
   let result = '';
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -238,6 +299,10 @@ app.reloadServices = async function (){
   $("#list_services").html(reloadServicesview)
   $(".app-sv").click(async function(){
     var all=document.getElementsByClassName("app-sv");
+    for (var i=0;i<all.length;i++) {
+      all[i].classList.remove("active");
+    }
+    var all=document.getElementsByClassName("app-item");
     for (var i=0;i<all.length;i++) {
       all[i].classList.remove("active");
     }
@@ -300,12 +365,10 @@ app.checkCookie = function () {
     }
   }
 }
-app.load = function (id, delay) {
-}
 app.delay = function (ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-app.compressIMAGE = async function(file,out) {
+app.compressIMAGE = async function(file,out,w=900,h=600) {
   const blobURL = URL.createObjectURL(file);
   const img = new Image();
   img.src = blobURL;
@@ -317,7 +380,7 @@ app.compressIMAGE = async function(file,out) {
   return prompt = new Promise(function(myResolve, myReject) {
     img.onload = function () {
       URL.revokeObjectURL(this.src);
-      const [newWidth, newHeight] = calculateSize(img, 900, 600);
+      const [newWidth, newHeight] = calculateSize(img, w, h);
       const canvas = document.createElement("canvas");
       canvas.width = newWidth;
       canvas.height = newHeight;
